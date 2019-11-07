@@ -1,16 +1,18 @@
 from credentials import Credentials
 import unittest
 
-class TestCredentials(unittest.TestCase):
+
+class TestCredential(unittest.TestCase):
 
     def setUp(self):
 
-        self.new_credentials = Credentials("Facebook", "user101", "user101@email", "QwerY23")
+        self.new_credentials = Credentials("Github", "user300", "Boom", "user300@email")
 
     def test_init(self):
-        self.assertEqual(self.new_credentials.password, "QwerY23")
+        self.assertEqual(self.new_credentials.password, "Boom")
         self.assertEqual(self.new_credentials.username, "user101")
         self.assertEqual(self.new_credentials.platform, "Github")
+        self.assertEqual(self.new_credentials.email, "user300@email")
 
     def test_save_credential(self):
         self.new_credentials.save_credentials()  # saving the new contact
@@ -21,13 +23,13 @@ class TestCredentials(unittest.TestCase):
 
     def test_save_multiple_contact(self):
         self.new_credentials.save_credentials()
-        test_credential = Credentials("Bitbucket", "user2", "u@u.com", "123asdf")  # new contact
+        test_credential = Credentials("user2", "124asdf", "u@u.com", "Bitbucket")  # new contact
         test_credential.save_credentials()
         self.assertEqual(len(Credentials.credentials_list), 2)
 
     def test_delete_credential(self):
         self.new_credentials.save_credentials()
-        test_credential = Credentials("Bitbucket", "user2", "u@u.com", "123asdf")
+        test_credential = Credentials("user2", "124asdf", "u@u.com", "Bitbucket")
         test_credential.save_credentials()
 
         self.new_credentials.delete_credentials()  # Deleting a contact object
@@ -39,50 +41,36 @@ class TestCredentials(unittest.TestCase):
         """
 
         self.new_credentials.save_credentials()
-        test_credential = Credentials("Bitbucket", "user2", "u@u.com", "123asdf")
+        test_credential = Credentials("user2", "124asdf", "u@u.com", "BitBucket")
         test_credential.save_credentials()
 
-        found_credential = Credentials.find_by_platform("Bitbucket")
+        found_credential = Credentials.find_by_platform("BitBucket")
 
         self.assertEqual(found_credential.platform, test_credential.platform)
 
-        def test_credential_exists(self):
-            """
-            test to check if we can return a Boolean  if we cannot find the credential.
-            """
+    def test_credential_exist(self):
+        self.new_credentials.save_credentials()
+        test_credential = Credentials("Bitbucket", "user2", "u@u.com", "123asdf")
+        test_credential.save_credentials()
 
-            self.new_credential.save_credential()
-            test_credential = Credentials("Bitbucket", "user2", "u@u.com", "123asdf")
-            test_credential.save_credentials()
+        self.assertTrue(Credentials.credentials_exists("Bitbucket"))
 
-            self.assertTrue(Credentials.credentials_exists("Bitbucket"))
+    def test_display_credentials(self):
+        self.assertEqual(Credentials.display_credentials(), Credentials.credentials_list)
 
-        def test_display_credentials(self):
-            """
-            method that returns a list of all saved credentials
-            """
-            self.assertEqual(Credentials.display_credentials(), Credentials.credentials_list)
+    def test_copy_password(self):
+        self.new_credentials.save_credentials()
+        Credentials.copy_password("Github")
 
-        def test_copy_password(self):
-            """
-            Test to confirm that we are copying the password from a found credential
-            """
+    def test_generate_password(self):
+        """
+        Test to confirm that the password we are generating ahs the desired length
+        """
+        self.new_credentials.save_credentials()
+        generated_password = Credentials.generate_password(12)
+        test_credential = Credentials("Bitbucket", "user2", "u@u.com", generated_password)
+        test_credential.save_credentials()
 
-            self.new_credential.save_credential()
-            Credentials.copy_password("Github")
-
-            # self.assertEqual(self.new_credential.password, pyperclip.paste())
-
-        def test_generate_password(self):
-            """
-            Test to confirm that the password we are generating ahs the desired length
-            """
-            self.new_credential.save_credential()
-            generated_password = Credentials.generate_password(12)
-            test_credential = Credentials("Bitbucket", "user2", "u@u.com", generated_password)
-            test_credential.save_credential()
-
-            self.assertEqual(len(test_credential.password), 12)
-
+        self.assertEqual(len(test_credential.password), 12)
     if __name__ == "__main__":
         unittest.main()
