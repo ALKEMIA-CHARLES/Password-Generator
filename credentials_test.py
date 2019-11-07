@@ -13,5 +13,14 @@ class TestCredentials(unittest.TestCase):
         self.assertEqual(self.new_credentials.platform, "Github")
 
     def test_save_credential(self):
-        self.new_credential.save_credential()  # saving the new contact
+        self.new_credentials.save_credentials()  # saving the new contact
         self.assertEqual(len(Credentials.credentials_list), 1)
+
+    def tearDown(self):
+        Credentials.credentials_list = []
+
+    def test_save_multiple_contact(self):
+        self.new_credentials.save_credentials()
+        test_credential = Credentials("Bitbucket", "user2", "u@u.com", "123asdf")  # new contact
+        test_credential.save_credentials()
+        self.assertEqual(len(Credentials.credentials_list), 2)
