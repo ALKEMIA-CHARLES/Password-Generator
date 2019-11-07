@@ -24,3 +24,11 @@ class TestCredentials(unittest.TestCase):
         test_credential = Credentials("Bitbucket", "user2", "u@u.com", "123asdf")  # new contact
         test_credential.save_credentials()
         self.assertEqual(len(Credentials.credentials_list), 2)
+
+    def test_delete_credential(self):
+        self.new_credentials.save_credentials()
+        test_credential = Credentials("Bitbucket", "user2", "u@u.com", "123asdf")
+        test_credential.save_credentials()
+
+        self.new_credentials.delete_credentials()  # Deleting a contact object
+        self.assertEqual(len(Credentials.credentials_list), 1)
