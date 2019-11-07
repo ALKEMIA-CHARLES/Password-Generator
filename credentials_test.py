@@ -53,14 +53,14 @@ class TestCredential(unittest.TestCase):
         test_credential = Credentials("Bitbucket", "user2", "u@u.com", "123asdf")
         test_credential.save_credentials()
 
-        self.assertTrue(Credentials.credentials_exists("Bitbucket"))
+        self.assertTrue(Credentials.credentials_exists("123asdf"))
 
     def test_display_credentials(self):
         self.assertEqual(Credentials.display_credentials(), Credentials.credentials_list)
 
     def test_copy_password(self):
         self.new_credentials.save_credentials()
-        Credentials.copy_password("Github")
+        Credentials.copy_password("Boom")
 
     def test_generate_password(self):
         """
