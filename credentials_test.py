@@ -6,13 +6,13 @@ class TestCredential(unittest.TestCase):
 
     def setUp(self):
 
-        self.new_credentials = Credentials("Github", "user300", "Boom", "user300@email")
+        self.new_credentials = Credentials("Boom", "user300", "GitHub", "user300@email")
 
     def test_init(self):
-        self.assertEqual(self.new_credentials.password, "Boom")
-        self.assertEqual(self.new_credentials.username, "user101")
-        self.assertEqual(self.new_credentials.platform, "Github")
-        self.assertEqual(self.new_credentials.email, "user300@email")
+        self.assertEqual(self.new_credentials.username, "Boom")
+        self.assertEqual(self.new_credentials.password, "user300")
+        self.assertEqual(self.new_credentials.email, "GitHub")
+        self.assertEqual(self.new_credentials.platform, "user300@email")
 
     def test_save_credential(self):
         self.new_credentials.save_credentials()  # saving the new contact
@@ -67,10 +67,10 @@ class TestCredential(unittest.TestCase):
         Test to confirm that the password we are generating ahs the desired length
         """
         self.new_credentials.save_credentials()
-        generated_password = Credentials.generate_password(12)
+        generated_password = Credentials.generate_password(5)
         test_credential = Credentials("Bitbucket", "user2", "u@u.com", generated_password)
         test_credential.save_credentials()
 
-        self.assertEqual(len(test_credential.password), 12)
+        self.assertEqual(len(test_credential.password), 5)
     if __name__ == "__main__":
         unittest.main()
