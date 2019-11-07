@@ -1,4 +1,4 @@
-import pyperclip
+# import pyperclip
 import string
 import random
 class Credentials:
