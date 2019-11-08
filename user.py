@@ -7,6 +7,7 @@ class User:
         self.username = username
         self.password = password
 
+
     def create_user(self):
         """
             this method appends new object to user_list

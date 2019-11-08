@@ -1,3 +1,5 @@
+import pyperclip
+
 from credentials import Credentials
 import unittest
 
@@ -61,6 +63,8 @@ class TestCredential(unittest.TestCase):
     def test_copy_password(self):
         self.new_credentials.save_credentials()
         Credentials.copy_password("Boom")
+
+        self.assertEqual(self.new_credentials.password, pyperclip.paste())
 
     def test_generate_password(self):
         """
