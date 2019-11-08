@@ -4,7 +4,6 @@ import random
 
 
 class Credentials:
-
     credentials_list = []
 
     def __init__(self, username, password, email, platform):

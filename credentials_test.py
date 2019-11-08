@@ -7,13 +7,13 @@ class TestCredential(unittest.TestCase):
 
     def setUp(self):
 
-        self.new_credentials = Credentials("Boom", "user300", "GitHub", "user300@email")
+        self.new_credentials = Credentials("user300", "Boom", "user300@email", "GitHub")
 
     def test_init(self):
-        self.assertEqual(self.new_credentials.username, "Boom")
-        self.assertEqual(self.new_credentials.password, "user300")
-        self.assertEqual(self.new_credentials.email, "GitHub")
-        self.assertEqual(self.new_credentials.platform, "user300@email")
+        self.assertEqual(self.new_credentials.username, "user300")
+        self.assertEqual(self.new_credentials.password, "Boom")
+        self.assertEqual(self.new_credentials.email, "user300@email")
+        self.assertEqual(self.new_credentials.platform, "GitHub")
 
     def test_save_credential(self):
         self.new_credentials.save_credentials()  # saving the new contact
