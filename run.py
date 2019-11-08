@@ -51,7 +51,14 @@ def copy_password():
     "This function copies the password"
     return Credentials.copy_password()
 
+
 def generate_password(length):
-    "This function generates the password while cheking the length at the same time"
+    "This function generates the password while checking the length at the same time"
     return Credentials.generate_password(length)
 
+
+def main():
+    print(""""
+    Welcome to GEN-PASS
+    WHERE ALL KINDS OF PASSWORDS ARE GENERATED TO SUIT YOUR SPECIFICATIONS
+    """, "white")
