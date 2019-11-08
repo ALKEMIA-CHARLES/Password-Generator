@@ -24,3 +24,7 @@ def authenticate_user(username, password):
 def create_credentials(username, password, email, platform):
     "This function works to create all of the credentials"
     new_credentials = Credentials(username, password, email, platform)
+
+
+def save_credentials(credentials):
+    credentials.save_credentials()
