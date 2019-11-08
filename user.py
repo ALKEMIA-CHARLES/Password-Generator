@@ -1,14 +1,11 @@
 class User:
-
-
     user_list = []
 
     def __init__(self, username, password):
         self.username = username
         self.password = password
 
-
-    def create_user(self):
+    def save_user(self):
         """
             this method appends new object to user_list
             """
