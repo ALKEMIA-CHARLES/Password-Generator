@@ -9,7 +9,7 @@ class UserTest(unittest.TestCase):
         self.assertEqual(self.new_user.password, "8000")
 
     def test_save_user(self):
-        self.new_user.create_user()
+        self.new_user.save_user()
         self.assertEqual(len(User.user_list), 1)
 
     def test_user_auth(self):
@@ -18,5 +18,5 @@ class UserTest(unittest.TestCase):
         """
         self.assertTrue(self.new_user.user_auth("user800", "8000"))
 
-    if __name__ == "__main__":
-        unittest.main()
+if __name__ == "__main__":
+    unittest.main()

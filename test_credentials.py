@@ -61,7 +61,7 @@ class TestCredential(unittest.TestCase):
 
     def test_copy_password(self):
         self.new_credentials.save_credentials()
-        Credentials.copy_password("Github")
+        Credentials.copy_password(self.new_credentials.platform)
 
         self.assertEqual(self.new_credentials.password, pyperclip.paste())
 
@@ -75,5 +75,6 @@ class TestCredential(unittest.TestCase):
         test_credential.save_credentials()
 
         self.assertEqual(len(test_credential.password), 5)
-    if __name__ == "__main__":
-        unittest.main()
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,3 +1,5 @@
+import pyperclip
+
 from credentials import Credentials
 from user import User
 import time
@@ -69,7 +71,7 @@ def main():
            Use the following short codes to manage your account 
                'lg' - Login 
                'xx' - Close app
-               """, "blue")
+               """,)
         print("What would you like to do?")
         code = input().lower()
         if code == "lg":
@@ -78,25 +80,24 @@ def main():
 
             if decision.startswith("n"):
                 login_name = input("Enter your username: ")
-                login_pin = getpass("Enter your pin: ")
+                login_pin = getpass("Enter your password: ")
                 print("Loading ...")
                 time.sleep(1.5)
                 print("\n")
-                print("CONGRATULATIONS, YOUR ACCOUNT HAS BEEN CREATED", "green", attrs=['bold'])
+                print("Hey Look at you, you have just created a GEN-PASS account", "green", attrs=['bold'])
                 print("Sign into your new account")
                 sign_in_name = input("Enter your username: ")
-                sign_in_pin = getpass("Enter your pin: ")
+                sign_in_pin = getpass("Enter your password: ")
                 save_user(create_user(login_name, login_pin))
                 if authenticate_user(sign_in_name, sign_in_pin):
                     print("Please wait...")
                     time.sleep(1.5)
-                    print("SUCCESSFULLY SIGNED IN", "green", attrs=['bold'])
+                    print("You have just signed in", "green", attrs=['bold'])
                     print("\n")
                     pass
                 else:
                     print("Please wait...")
                     time.sleep(1.5)
-                    # cprint("Oops, you entered the wrong username/pin, we have to do this again :(","red")
                     print("\n")
             else:
                 sign_in_name = input("Enter your username: ")
@@ -104,16 +105,133 @@ def main():
                 if authenticate_user(sign_in_name, sign_in_pin):
                     print("Please wait...")
                     time.sleep(1.5)
-                    print("SUCCESSFULLY SIGNED IN", "green", attrs=['bold'])
+                    print("You have successfully signed in", "green", attrs=['bold'])
                     print("\n")
                     pass
                 else:
                     print("Please wait...")
                     time.sleep(1.5)
-                    # cprint("Oops, you entered the wrong username/pin, we have to do this again :(","red")
                     print("\n")
             while True:
                 if authenticate_user(sign_in_name, sign_in_pin):
                     ####
                     print(
                         """
+                    WELCOME TO PASS-GEN:
+                        Use the following commands to navigate the application:
+                            'create' - enables you to create an a credential
+                            'display' - displays the credentials you have saved
+                            'copy' - copies the password of a given credential
+                            'find' - helps you find a credential by its platform name
+                            'del' - deletes a credential
+                            'log-out' - logs you out
+                            'help' - helps a user around the app
+                                            """, "white")
+                    print(f" Hello there, {sign_in_name}, what task would you like to perform?")
+                    key_word = input().lower()
+
+                    if key_word == 'create':
+                        print("Save a new credential")
+                        platform = input("Input the platform: ")
+                        print("\n")
+                        username = input("Input your username: ")
+                        print("\n")
+                        email = input("Input your email: ")
+                        print("\n")
+                        option = input("Would you wish to have Vault generate a password for you? Y or N ").lower()
+                        if option.startswith("y"):
+                            print()
+                            desired_len = int(
+                                input("How long would you like your password to be? Provide number only. "))
+                            password = generate_password(desired_len)
+                        else:
+                            print("\n")
+                            password = getpass("Enter your password: ")
+
+                        save_credentials(create_credentials(platform, username, email, password))
+                        print('\n')
+                        print(f"NEW CREDENTIALS FOR {platform} CREATED!", "green", attrs=['bold'])
+                        print("_" * 50)
+                        print('\n')
+
+                    elif key_word == 'display':
+
+                        if display_credentials():
+                            print("HERE ARE YOUR CREDENTIALS")
+                            print('\n')
+
+                            for cred in display_credentials():
+                                print(
+                                    f"""
+                                Platform --- {cred.platform}               
+                                         Username --- {cred.username}               
+                                         Email    --- {cred.email}                  
+                                         Password --- {cred.password}
+                                    """)
+                                print('\n')
+                            else:
+                                print('\n')
+                                print("You don't seem to have any credentials saved yet", "red")
+                                print("_" * 50)
+                                print('\n')
+
+                        elif key_word == 'find':
+                            print("Enter the platform you want to search for")
+                            print("\n")
+                            platform_search = input()
+                            if check_for_existing_credentials(platform_search):
+                                search_credential = look_for_credentials(platform_search)
+                                print(
+                                    f"""
+                                Platform --- {search_credential.platform}               
+                                     Username --- {search_credential.username}               
+                                     Email    --- {search_credential.email}                  
+                                     Password --- {search_credential.password}
+                                     """)
+                                print("_" * 50)
+                            else:
+                                print("The credential you have searched does not exist", "red")
+                        elif key_word == "copy":
+                            print("Enter the platform whose password you would like copied")
+                            platform_find = input()
+                            print("Loading...")
+                            if check_for_existing_credentials(platform_find):
+                                search_credential = look_for_credentials(platform_find)
+                                pyperclip.copy(search_credential.password)
+                                time.sleep(1.5)
+                                print("\n")
+                                print(f" Good work password for {search_credential.platform} has been coped", "green",
+                                       attrs=['bold'])
+                                print("_" * 50)
+
+                            else:
+                                print("The platform you entered does not exist", "yellow")
+                                print("_" * 50)
+
+                        elif key_word == "del":
+                            print("Enter the platform whose credentials you'd like to delete")
+                        platform_delete = input()
+                        if check_for_existing_credentials(platform_delete):
+                            print("Please wait ...")
+                            platform_credentials = look_for_credentials(platform_delete)
+                            delete_credentials(platform_credentials)
+                            time.sleep(1.5)
+                            print(f"Credentials for {platform_credentials.platform} successfully deleted", "green",
+                                   attrs=['bold'])
+                        else:
+                            print("The credential does not exist", "red")
+
+                    elif key_word == "ex":
+                        print(f"Have a nice day {login_name}")
+                        print("_" * 50)
+                        break
+
+                    elif key_word == "help":
+                        print("Don't panic I got you")
+
+                    else:
+                        print(
+                            "You entered an unknown keyword. Please use the provided keywords. Type '-help' if you're "
+                            "stuck",
+                            "yellow")
+                        print("_" * 50)
