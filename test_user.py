@@ -1,9 +1,11 @@
 import unittest
 from user import User
 
+
 class UserTest(unittest.TestCase):
     def setUp(self):
         self.new_user = User("user800", "8000")
+
     def test_init(self):
         self.assertEqual(self.new_user.username, "user800")
         self.assertEqual(self.new_user.password, "8000")
@@ -17,6 +19,7 @@ class UserTest(unittest.TestCase):
         test_user_auth tests case to authenticate the user
         """
         self.assertTrue(self.new_user.user_auth("user800", "8000"))
+
 
 if __name__ == "__main__":
     unittest.main()

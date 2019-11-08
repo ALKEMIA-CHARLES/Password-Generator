@@ -26,15 +26,15 @@ class Credentials:
             if credentials.platform == platform:
                 return credentials
 
-    def generate_password(self, length):
-        """
-        this method uses the string method to generate a password of random digits and letters
-        the length of the password is determined by the length passed in the function's parameter
-        Args:
-            the desired password length
-        """
-        chars = string.ascii_uppercase + string.digits + string.ascii_lowercase
-        return "".join(random.choice(chars) for i in range(length))
+    # def generate_password(self, length):
+    #     """
+    #     this method uses the string method to generate a password of random digits and letters
+    #     the length of the password is determined by the length passed in the function's parameter
+    #     Args:
+    #         the desired password length
+    #     """
+    #     chars = string.ascii_uppercase + string.digits + string.ascii_lowercase
+    #     return "".join(random.choice(chars) for i in range(length))
 
     @classmethod
     def credentials_exists(cls, platform):
@@ -55,5 +55,11 @@ class Credentials:
 
     @classmethod
     def generate_password(cls, length):
+        """
+               this method uses the string method to generate a password of random digits and letters
+               the length of the password is determined by the length passed in the function's parameter
+               Args:
+                   the desired password length
+               """
         chars = string.ascii_uppercase + string.digits + string.ascii_lowercase
         return "".join(random.choice(chars) for i in range(length))

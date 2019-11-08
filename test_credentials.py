@@ -6,7 +6,7 @@ import unittest
 class TestCredential(unittest.TestCase):
 
     def setUp(self):
-
+        self.credentials = Credentials()
         self.new_credentials = Credentials("user300", "Boom", "user300@email", "GitHub")
 
     def test_init(self):
@@ -75,6 +75,7 @@ class TestCredential(unittest.TestCase):
         test_credential.save_credentials()
 
         self.assertEqual(len(test_credential.password), 5)
+
 
 if __name__ == "__main__":
     unittest.main()
