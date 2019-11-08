@@ -2,10 +2,6 @@ from credentials import Credentials
 from user import User
 import random
 
-welcome = "Welcome to Password Locker "
-parser = argparse.ArgumentParser(description=welcome)
-parser.parse_args()
-
 
 def create_user(username, password):
     new_user = User(username, password)
@@ -28,3 +24,26 @@ def create_credentials(username, password, email, platform):
 
 def save_credentials(credentials):
     credentials.save_credentials()
+
+
+def delete_credentials(credentials):
+    credentials.delete_credentials()
+
+
+def look_for_credentials(platform):
+    return Credentials.find_by_platform(platform)
+
+
+def check_for_existing_credentials(platform):
+    return Credentials.credentials_exists(platform)
+
+
+def display_credentials():
+    return Credentials.display_credentials()
+
+
+def copy_password():
+    return Credentials.copy_password()
+
+def generate_password(length):
+    return Credentials.generate_password(length)
